@@ -18,7 +18,7 @@ public abstract class Product {
 	
 	//----------------------------------------SETTERS----------------------------------------
 
-	protected void setName(String name) {
+	private void setName(String name) {
 		if (name != null && name.trim().length() > 0) {
 			this.name = name;
 		} else {
@@ -26,15 +26,15 @@ public abstract class Product {
 		}
 	}
 
-	protected void setPrice(double price) {
+	private void setPrice(double price) {
 		this.price = price > 0 ? price : 0;
 	}
 
-	protected void setQuantity(int quantity) {
+	private void setQuantity(int quantity) {
 		this.quantity = quantity > 0 ? quantity : 0;
 	}
 
-	protected void setWarranty(Warranty warranty) {
+	private void setWarranty(Warranty warranty) {
 		if (warranty != null) {
 			this.warranty = warranty;
 		} else {
