@@ -16,6 +16,14 @@ public abstract class Product {
 	
 	public abstract int getWarrantyPeriodInMonths();
 	
+	public void reduceQuantity(int quantity){
+		if(this.quantity<quantity || quantity<=0){
+			System.out.println("Invalid reduction amount.");
+		}else{
+			this.quantity-=quantity;
+		}
+	}
+	
 	//----------------------------------------SETTERS----------------------------------------
 
 	private void setName(String name) {
