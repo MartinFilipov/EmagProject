@@ -1,6 +1,7 @@
 
 public abstract class Product {
-	
+	private static int id = 0;
+	private int productId;
 	private String name;
 	private double price;
 	private int quantity;
@@ -10,6 +11,7 @@ public abstract class Product {
 		setName(name);
 		setPrice(price);
 		setQuantity(quantity);
+		productId = ++id;
 	}
 	
 	//----------------------------------------METHODS----------------------------------------
@@ -21,6 +23,12 @@ public abstract class Product {
 			System.out.println("Invalid reduction amount.");
 		}else{
 			this.quantity-=quantity;
+		}
+	}
+	
+	public void increaseQuantity(int quantity){
+		if (quantity > 0) {
+			this.quantity += quantity;
 		}
 	}
 	
@@ -62,6 +70,10 @@ public abstract class Product {
 
 	public int getQuantity() {
 		return quantity;
+	}
+	
+	public int getProductId() {
+		return productId;
 	}
 	
 }
