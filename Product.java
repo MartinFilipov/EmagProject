@@ -1,3 +1,4 @@
+package Classes;
 
 public abstract class Product {
 	private static int id = 0;
@@ -15,7 +16,8 @@ public abstract class Product {
 	}
 	
 	//----------------------------------------METHODS----------------------------------------
-	
+
+	abstract Product clone(int quantity);
 	public abstract int getWarrantyPeriodInMonths();
 	
 	public void reduceQuantity(int quantity){
@@ -75,5 +77,6 @@ public abstract class Product {
 	public int getProductId() {
 		return productId;
 	}
+
 	
 }
