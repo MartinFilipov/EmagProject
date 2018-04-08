@@ -1,3 +1,5 @@
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Warranty {
@@ -15,6 +17,10 @@ public class Warranty {
 			System.out.println("Invalid product, can't make a warranty.");
 		}
 	}
+	
+	public boolean isValid(){
+		return System.currentTimeMillis()<=endDate.getTime();
+	}
 
 	// ----------------------------------------GETTERS----------------------------------------
 
@@ -24,7 +30,7 @@ public class Warranty {
 
 	@Override
 	public String toString() {
-		return "Warranty [product=" + product + ", endDate=" + endDate + "]";
+		return "Warranty of product: " + product.getName() + " , expiration date: " + endDate;
 	}
 
 }
