@@ -1,4 +1,5 @@
 
+
 public class Weapon extends Medieval implements Testable, IWeapon{
 	private static final double CHANCE_OF_BREAKING_WHEN_HIT_IN_THE_GROUND= 0.1;
 	private static final double CHANCE_OF_BREAKING_WHILE_SWINGING = 0.08;
@@ -39,6 +40,10 @@ public class Weapon extends Medieval implements Testable, IWeapon{
 			return false;
 		}
 	}
+	@Override
+	public Weapon clone(int quantity) {
+		return new Weapon(this.getName(),this.getPrice(),quantity,this.getWeaponType());
+	}
 
 	//----------------------------------------SETTERS----------------------------------------
 	private void setWeaponType(WeaponType weaponType) {
@@ -54,4 +59,9 @@ public class Weapon extends Medieval implements Testable, IWeapon{
 		return weaponType;
 	}
 
+	@Override
+	public String toString() {
+		return "Weapon name: "+this.getName()+", weapon type: " + weaponType +" quantity: "+this.getQuantity();
+	}
+	
 }

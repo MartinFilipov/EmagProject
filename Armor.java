@@ -41,6 +41,10 @@ public class Armor extends Medieval implements Testable, IArmor{
 		}
 	} 
 	
+	@Override
+	public Armor clone(int quantity) {
+		return new Armor(this.getName(), this.getPrice(), quantity, this.getArmorType(), this.getOrigin());
+	}
 	
 	//----------------------------------------SETTERS----------------------------------------
 	private void setArmorType(ArmorType armorType) {
@@ -66,6 +70,13 @@ public class Armor extends Medieval implements Testable, IArmor{
 	public Origin getOrigin() {
 		return origin;
 	}
+
+	@Override
+	public String toString() {
+		return "Armor name: " + this.getName() + ", armor type: "+armorType+", origin: " + origin;
+	}
+
+
 
 
 	
