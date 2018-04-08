@@ -1,4 +1,7 @@
+
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -14,13 +17,15 @@ public class User {
 	private List<Warranty> warranties;
 	private List<Review> reviews;
 
-	public User(Shop shop, BankAccount bankAccount) {
+	public User(Shop shop, BankAccount bankAccount,String address,String name) {
 		this.shop = shop;
 		this.bankAccount = bankAccount;
 		this.purchases = new ArrayList<>();
 		this.favourites = new ArrayList<>();
 		this.warranties = new ArrayList<>();
 		this.reviews = new ArrayList<>();
+		this.cart=new Cart(shop, this, address, name);
+		this.vouchers=new HashSet<>();
 	}
 
 	// ----------------------------------------METHODS----------------------------------------
@@ -167,7 +172,26 @@ public class User {
 			}
 		}
 	}
-
+	
+	void addWarranty(Warranty warranty){
+		if(warranty!=null){
+			this.warranties.add(warranty);
+		}else{
+			System.out.println("Invalid warranty.");
+		}
+	}
+	
+	public void listWarranties(){
+		for(Product p: purchases){
+			System.out.println(p);
+			if(p.checkWarranty()){
+				System.out.print("\t");
+				p.printWarranty();
+			}else{
+				System.out.println("\tDoesn't have a valid warranty.");
+			}
+		}
+	}
 	// ----------------------------------------METHODS----------------------------------------
 
 	public void setBankAccount(BankAccount bankAccount) {
@@ -177,8 +201,7 @@ public class User {
 	}
 
 	public void removeMoneyForProduct(double d) {
-		// TODO Auto-generated method stub
-		
+		this.bankAccount.withdraw(d);
 	}
 
 }

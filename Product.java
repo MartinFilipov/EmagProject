@@ -1,4 +1,4 @@
-package Classes;
+
 
 public abstract class Product {
 	private static int id = 0;
@@ -33,7 +33,12 @@ public abstract class Product {
 			this.quantity += quantity;
 		}
 	}
-	
+	public boolean checkWarranty(){
+		if(warranty!=null){
+			return warranty.isValid();
+		}
+		return false;
+	}
 	//----------------------------------------SETTERS----------------------------------------
 
 	private void setName(String name) {
@@ -52,14 +57,19 @@ public abstract class Product {
 		this.quantity = quantity > 0 ? quantity : 0;
 	}
 
-	private void setWarranty(Warranty warranty) {
+	void setWarranty(Warranty warranty) {
 		if (warranty != null) {
 			this.warranty = warranty;
 		} else {
 			this.warranty = null;
 		}
 	}
-
+	
+	void printWarranty(){
+		if(warranty!=null){
+			System.out.println(warranty);
+		}
+	}
 	//----------------------------------------GETTERS----------------------------------------
 
 	public String getName() {
@@ -77,6 +87,6 @@ public abstract class Product {
 	public int getProductId() {
 		return productId;
 	}
-
 	
+		
 }

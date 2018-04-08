@@ -1,3 +1,5 @@
+
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ public class Shop {
 		this.products = new HashMap<>();
 		this.money = 1_000;
 		this.suppliers = new HashMap<>();
+		this.voucherCodes=new HashMap<>();
 		generateVouchers();
 	}
 
@@ -205,7 +208,11 @@ public class Shop {
 			}
 			
 			user.removeMoneyForProduct(retailPrice);
-			user.addProduct(product.clone(quantity));
+			Product userProduct=product.clone(quantity);
+			Warranty userProductWarranty=new Warranty(userProduct);
+			userProduct.setWarranty(userProductWarranty);
+			user.addWarranty(userProductWarranty);
+			user.addProduct(userProduct);
 			paySupplier(this.suppliers.get(product.getProductId()), retailPrice * SUPPLIER_PROFIT_COEFF);
 			
 			return true;
@@ -239,8 +246,12 @@ public class Shop {
 				System.out.println("Something went wrong.");
 				return false;
 			}
-			user.removeMoneyForProduct(retailPrice);
-			user.addProduct(product.clone(quantity));
+			user.removeMoneyForProduct(retailPriceWithDiscount);
+			Product userProduct=product.clone(quantity);
+			Warranty userProductWarranty=new Warranty(userProduct);
+			userProduct.setWarranty(userProductWarranty);
+			user.addWarranty(userProductWarranty);
+			user.addProduct(userProduct);
 			paySupplier(this.suppliers.get(product.getProductId()), retailPriceWithDiscount * SUPPLIER_PROFIT_COEFF);
 			return true;
 		}
@@ -260,5 +271,14 @@ public class Shop {
 		}
 		return false;
 	}
+	public double getMoney(){
+		return money;
+	}
 
+// Here for testing purposes
+//	public void printVoucherCodes(){
+//		for(String s: voucherCodes.keySet()){
+//			System.out.println(s);
+//		}
+//	}
 }
