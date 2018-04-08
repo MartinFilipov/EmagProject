@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class ShopSupplier {
 	public void giveProductsToShop() {
 		if (this.supplyList.size() > 0) {
 
-			this.shop.takeProductsFromShopSupplier(new HashMap<String, Product>(supplyList), this);
+			this.shop.receiveProductsFromShopSupplier(new HashMap<String, Product>(supplyList), this);
 			this.supplyList.clear();
 
 		}
@@ -41,4 +42,9 @@ public class ShopSupplier {
 			this.money += sum;
 		}
 	}
+
+	public double getMoney() {
+		return money;
+	}
+	
 }
