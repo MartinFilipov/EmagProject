@@ -1,4 +1,5 @@
 
+
 public class BankAccount {
 	private String id;
 	private double money;
@@ -10,7 +11,7 @@ public class BankAccount {
 	}
 	//----------------------------------------METHODS----------------------------------------
 	
-	public synchronized boolean deposit(int money){
+	public synchronized boolean deposit(double money){
 		if(money>0){
 			this.money+=money;
 			return true;
@@ -18,9 +19,9 @@ public class BankAccount {
 		System.out.println("Invalid deposit amount!");
 		return false;
 	}
-	public synchronized boolean withdraw(int money){
-		if(this.money>=money){
-			this.money-=money;
+	public synchronized boolean withdraw(double d){
+		if(this.money>=d){
+			this.money-=d;
 			return true;
 		}
 		System.out.println("Withdraw amount exceeds the limit!");
@@ -38,7 +39,7 @@ public class BankAccount {
 	}
 
 	private void setMoney(double money) {
-		if(this.money>0){
+		if(money>0){
 			this.money = money;
 		}else{
 			this.money=0;
