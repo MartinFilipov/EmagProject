@@ -7,6 +7,7 @@ public abstract class Product {
 	private double price;
 	private int quantity;
 	private Warranty warranty;
+	private int discount;
 	
 	public Product(String name, double price, int quantity) {
 		setName(name);
@@ -18,6 +19,7 @@ public abstract class Product {
 	//----------------------------------------METHODS----------------------------------------
 
 	abstract Product clone(int quantity);
+	
 	public abstract int getWarrantyPeriodInMonths();
 	
 	public void reduceQuantity(int quantity){
@@ -40,6 +42,12 @@ public abstract class Product {
 		return false;
 	}
 	//----------------------------------------SETTERS----------------------------------------
+	
+	void assignDiscount(int discount) {
+		if (discount > 0 && discount < 21) {
+			this.discount = discount;
+		}
+	}
 
 	private void setName(String name) {
 		if (name != null && name.trim().length() > 0) {
@@ -71,13 +79,21 @@ public abstract class Product {
 		}
 	}
 	//----------------------------------------GETTERS----------------------------------------
+	
+	private double calculateDiscount() {
+		return this.price * (this.discount / 100);
+	}
+	
+	public int getDiscount() {
+		return this.discount;
+	}
 
 	public String getName() {
 		return name;
 	}
 
 	public double getPrice() {
-		return price;
+		return price - calculateDiscount();
 	}
 
 	public int getQuantity() {
