@@ -1,3 +1,5 @@
+package Classes;
+
 
 public class Armor extends Medieval implements Testable, IArmor{
 

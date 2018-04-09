@@ -1,3 +1,4 @@
+package Classes;
 
 
 import java.io.File;
@@ -70,7 +71,8 @@ public class Shop {
 	
 	public void showProducts() {
 		for (String name : this.products.keySet()) {
-			System.out.println(name);
+			double price=this.products.get(name).values().iterator().next().getPrice();
+			System.out.println(name+", price: "+price);
 		}
 	}
 
@@ -172,7 +174,7 @@ public class Shop {
 		Scanner in = new Scanner(System.in);
 		int index = 1;
 		for (Product p : products.get(productName).values()) {
-			System.out.println("Index: " + (index++) + " " + p);
+			System.out.println("Index: " + (index++) + " " + p +", price: "+p.getPrice());
 		}
 		int insertIndex = 0;
 		do {

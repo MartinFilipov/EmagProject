@@ -34,7 +34,7 @@ public class Cart {
 			System.out.println(p);
 			int quantity=0;
 			do{
-				System.out.print("Insert quantity between 1: "+p.getQuantity());
+				System.out.print("Insert quantity between 1 and "+p.getQuantity()+": ");
 				quantity=in.nextInt();
 			}while(quantity<1 || quantity>p.getQuantity());
 			quantities[index++]=quantity;
@@ -62,7 +62,7 @@ public class Cart {
 	}
 
 	boolean cashOutWithVoucher(Voucher voucher) {
-		if(!shop.checkVoucher(voucher)){
+		if(!shop.checkVoucher(voucher.getCode())){
 			System.out.println("Invalid voucher!");
 			return false;
 		}

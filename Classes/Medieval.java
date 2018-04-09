@@ -1,4 +1,5 @@
 
+package Classes;
 public abstract class Medieval extends Product{
 
 	private	static final int WARRANTY_PERIOD=6;

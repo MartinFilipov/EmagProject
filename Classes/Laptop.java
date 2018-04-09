@@ -1,4 +1,5 @@
 
+package Classes;
 public class Laptop extends DeviceWithOperatingSystem implements ILaptop, Testable, IElectronics{
 
 	private static final int MIN_MEMORY = 1024;

@@ -1,4 +1,5 @@
 
+package Classes;
 public class Phone extends DeviceWithOperatingSystem implements IPhone, Testable, IElectronics {
 	
 	private static final double CHANCE_NOT_TO_TURN_ON_OFF = 0.95;

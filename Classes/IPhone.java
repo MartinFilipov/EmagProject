@@ -1,4 +1,5 @@
 
+package Classes;
 public interface IPhone {
 	boolean openAnApp();
 	boolean unlockScreen();

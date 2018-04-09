@@ -1,4 +1,5 @@
 
+package Classes;
 public abstract class Electronics extends Product{
 	private static final int WARRANTY_FOR_ELECTRONICS = 24;
 	

@@ -1,4 +1,5 @@
 
+package Classes;
 public class Review {
 	private String comment;
 	private Product product;

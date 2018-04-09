@@ -1,3 +1,4 @@
+package Classes;
 
 public class Voucher {
 	private String code;

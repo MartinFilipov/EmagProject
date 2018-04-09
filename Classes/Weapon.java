@@ -1,3 +1,4 @@
+package Classes;
 
 
 public class Weapon extends Medieval implements Testable, IWeapon{

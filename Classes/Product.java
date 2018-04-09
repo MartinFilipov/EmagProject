@@ -1,4 +1,5 @@
 
+package Classes;
 
 public abstract class Product {
 	private static int id = 0;

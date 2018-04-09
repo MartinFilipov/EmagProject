@@ -1,4 +1,5 @@
 
+package Classes;
 public enum Origin {
 	CHINA,GERMANY,FRANCE,INDIA,AMERICA,ENGLANG,SCOTLAND,JAPAN,
 }

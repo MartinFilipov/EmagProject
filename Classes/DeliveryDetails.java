@@ -1,3 +1,4 @@
+package Classes;
 
 public class DeliveryDetails {
 	private String adress;
