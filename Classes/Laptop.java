@@ -1,5 +1,4 @@
 
-package Classes;
 public class Laptop extends DeviceWithOperatingSystem implements ILaptop, Testable, IElectronics{
 
 	private static final int MIN_MEMORY = 1024;
@@ -110,5 +109,13 @@ public class Laptop extends DeviceWithOperatingSystem implements ILaptop, Testab
 		return new Laptop(this.getName(), this.getPrice(), quantity, 
 				this.getModel(), this.getOperatingSystem(), this.getProcessorSpeed(), this.getMemory());
 	}
+
+	@Override
+	public String toString() {
+		return "Laptop name: " + this.getName() + ", processor speed: " + this.getProcessorSpeed() + 
+				", memory: " + this.getMemory() + ", quantity: " + this.getQuantity();
+	}
+	
+	
 	
 }

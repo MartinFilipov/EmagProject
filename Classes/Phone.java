@@ -1,5 +1,4 @@
 
-package Classes;
 public class Phone extends DeviceWithOperatingSystem implements IPhone, Testable, IElectronics {
 	
 	private static final double CHANCE_NOT_TO_TURN_ON_OFF = 0.95;
@@ -100,4 +99,12 @@ public class Phone extends DeviceWithOperatingSystem implements IPhone, Testable
 		return new Phone(this.getName(), this.getPrice(), quantity, 
 				this.getModel(), this.isTouchScreen(), this.getOperatingSystem());
 	}
+
+	@Override
+	public String toString() {
+		return "Phone name: " + this.getName() + ", touchscreen: "  + ((isTouchScreen()) ? "Yes" : "No") + 
+				", quantity: " + this.getQuantity();
+	}
+	
+	
 }
