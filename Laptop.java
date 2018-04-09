@@ -101,4 +101,13 @@ public class Laptop extends DeviceWithOperatingSystem implements ILaptop, Testab
 		return processorSpeed;
 	}
 
+	
+	//----------------------------------------OTHER METHODS----------------------------------------
+
+	@Override
+	Laptop clone(int quantity) {
+		return new Laptop(this.getName(), this.getPrice(), quantity, 
+				this.getModel(), this.getOperatingSystem(), this.getProcessorSpeed(), this.getMemory());
+	}
+	
 }

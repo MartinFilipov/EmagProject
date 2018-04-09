@@ -93,4 +93,10 @@ public class Phone extends DeviceWithOperatingSystem implements IPhone, Testable
 	public boolean isTouchScreen() {
 		return isTouchScreen;
 	}
+
+	@Override
+	Phone clone(int quantity) {
+		return new Phone(this.getName(), this.getPrice(), quantity, 
+				this.getModel(), this.isTouchScreen(), this.getOperatingSystem());
+	}
 }
