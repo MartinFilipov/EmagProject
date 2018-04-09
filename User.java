@@ -16,6 +16,8 @@ public class User {
 	private List<Product> favourites;
 	private List<Warranty> warranties;
 	private List<Review> reviews;
+	
+	private boolean isLoggedIn;
 
 	public User(Shop shop, BankAccount bankAccount,String address,String name) {
 		this.shop = shop;
@@ -26,6 +28,7 @@ public class User {
 		this.reviews = new ArrayList<>();
 		this.cart=new Cart(shop, this, address, name);
 		this.vouchers=new HashSet<>();
+		this.isLoggedIn = false;
 	}
 
 	// ----------------------------------------METHODS----------------------------------------
@@ -192,6 +195,7 @@ public class User {
 			}
 		}
 	}
+	
 	// ----------------------------------------METHODS----------------------------------------
 
 	public void setBankAccount(BankAccount bankAccount) {
@@ -202,6 +206,20 @@ public class User {
 
 	public void removeMoneyForProduct(double d) {
 		this.bankAccount.withdraw(d);
+	}
+	
+	public void register() {
+		this.shop.registerUser();
+	}
+	
+	public void logIn() {
+		if (this.shop.logInUser()) {
+			this.isLoggedIn = true;
+		}
+	}
+	
+	public void logOut() {
+		this.isLoggedIn = false;
 	}
 
 }

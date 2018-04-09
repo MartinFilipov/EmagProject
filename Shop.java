@@ -1,11 +1,17 @@
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Shop {
 	private static final int MIN_DISCOUNT_IN_PERCENTAGE = 10;
@@ -15,17 +21,23 @@ public class Shop {
 	private static final double SHOP_PROFIT_COEFF = 0.1;
 	private static final double SUPPLIER_PROFIT_COEFF = 0.9;
 	
+	private Map<String, Integer> users;
+	
 	private double money;
 	private Map<String, Voucher> voucherCodes;
 	private Map<String, Map<Integer, Product>> products;
+	private List<Product> discountedProducts;
 	private Map<Integer, ShopSupplier> suppliers;
 
 	public Shop() {
+		this.discountedProducts = new ArrayList<>();
+		this.users = new HashMap<>();
 		this.products = new HashMap<>();
 		this.money = 1_000;
 		this.suppliers = new HashMap<>();
 		this.voucherCodes=new HashMap<>();
 		generateVouchers();
+		loadUsers();
 	}
 
 	// ----------------------------------------METHODS----------------------------------------
@@ -197,6 +209,7 @@ public class Shop {
 		}
 		return false;
 	}
+	
 	private boolean sell(Product product, User user, int quantity) {
 		if (product != null) {
 			double retailPrice = (product.getPrice() * quantity);
@@ -271,10 +284,157 @@ public class Shop {
 		}
 		return false;
 	}
+	
 	public double getMoney(){
 		return money;
 	}
+	
+	//----------------------------------------------------------------------------------------------------
+	
+	// loads the users from a file
+	private void loadUsers() {
+		try (Scanner sc = new Scanner(new File("registeredUsers.txt"));) {
+			
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] usernamePassword = line.split(",");
+				this.users.put(usernamePassword[0], Integer.parseInt(usernamePassword[1]));
+			}
+						
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+			return;
+		}
+	}
+	
+	// checks if a username exists
+	private boolean usernameTaken(String username) {
+		if (username != null) {
+			
+			try (Scanner sc = new Scanner(new File("registeredUsers.txt"));) {
+				
+				while (sc.hasNextLine()) {
+					String line = sc.nextLine();
+					String[] usernamePassword = line.split(",");
+					
+					if (username.equals(usernamePassword[0])) {
+						System.out.println("Username taken!");
+						return true;
+					}
+				}
+				
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found");
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	// checks if a username/password is valid length
+	private boolean isValidLength(String specifier) {
+		if (specifier != null) {
+			if (specifier.length() >= 6) {
+				return true;
+			} else {
+				System.out.println(specifier + " should be at least 6 characters");
+			}
+		}
+		return false;
+	}
+	
+	// registers a user and saves the information in a file
+	void registerUser() {
+		Scanner sc = new Scanner(System.in);
+		
+		String username;
+		
+		do {
+			System.out.print("Enter username: ");
+			username = sc.nextLine();
+		} while (usernameTaken(username) || !isValidLength(username));
+		
+		String password;
+		
+		do {
+			System.out.print("Enter password: ");
+			password = sc.nextLine();
+		} while (!isValidLength(password));
+		
+		try (FileWriter file = new FileWriter("registeredUsers.txt", true);
+				PrintWriter out = new PrintWriter(file);) {
+			
+			out.print(username + ",");
+			out.println(password.hashCode());
+			
+		} catch (IOException e) {
+			return;
+		}
+	}
+	
+	// logs in a user with correct username and password
+	boolean logInUser() {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Enter username: ");
+		String username = sc.nextLine();
+		
+		if (!this.users.containsKey(username)) { 
+			System.out.println("Invalid username");
+			return false;
+		}
+		
+		System.out.print("Enter password: ");
+		String password = sc.nextLine();
+		int hashedPassword = password.hashCode();
+				
+		if (this.users.get(username) != hashedPassword) {	
+			System.out.println("Invalid password");
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	private void clearDiscounts() {
+		for (Product p : this.discountedProducts) {
+			p.assignDiscount(0);
+		}
+		this.discountedProducts.clear();
+	}
 
+	public void assignDiscounts() {
+		clearDiscounts();
+		
+		int numberOfProducts = this.products.size();
+		int numberOfDiscounts = (int) (numberOfProducts * 0.1);
+		
+		int numberOfDiscountedProducts = 0;
+		for (Entry<String, Map<Integer, Product>> entry : this.products.entrySet()) {
+			
+			Map<Integer, Product> suppliers = entry.getValue();
+			
+			int numberOfSuppliers = suppliers.size();
+			int randomSupplier = new Random().nextInt(numberOfSuppliers);
+			
+			int index = 0;
+			for (Product p : suppliers.values()) {
+				if (index == randomSupplier) {
+					p.assignDiscount(new Random().nextInt(20) + 1);
+					discountedProducts.add(p);
+					break;
+				}
+			}
+			
+			if (numberOfDiscountedProducts++ >= numberOfDiscounts) {
+				return;
+			}
+			
+		}
+	}
+	
 // Here for testing purposes
 //	public void printVoucherCodes(){
 //		for(String s: voucherCodes.keySet()){
