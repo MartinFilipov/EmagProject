@@ -17,8 +17,16 @@ class Logger extends Thread {
 		File prodavaniq = new File("ProdadenaStoka.txt");
 
 		while (true) {
+			while(shop.getSoldProductsSize()==0) {
+				try {
+					Thread.sleep(5_000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			try {
-				Thread.sleep(1);
+				Thread.sleep(10_000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -29,7 +37,7 @@ class Logger extends Thread {
 					out.println((index++) +": "+ p);
 				}
 			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
+				return;
 			}
 		}
 

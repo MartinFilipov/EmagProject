@@ -16,7 +16,7 @@ import Classes.WeaponType;
 public class Demo {
 	public static void main(String[] args) {
 		
-		Shop shop=new Shop();
+		Shop shop=Shop.getInstance();
 		ShopSupplier shopSupplier1 = new ShopSupplier(shop);
 		ShopSupplier shopSupplier2 = new ShopSupplier(shop);
 		ShopSupplier[] suppliers={shopSupplier1,shopSupplier2};
@@ -43,7 +43,7 @@ public class Demo {
 		User user =new User(shop, new BankAccount("123843F", 10000),"New York","TestUser");
 		user.chooseAProductToAddToCart();
 		user.chooseAProductToAddToCart();
-		user.chooseAProductToAddToCart();	
+		user.chooseAProductToAddToCart();
 
 		user.cashOut();
 		System.out.println("User money: "+user.checkBalance());

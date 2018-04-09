@@ -86,7 +86,7 @@ public class User {
 		this.cart.cashOut();
 
 	}
-
+	
 	public void chooseAProductToAddToCart() {
 		System.out.println("--------------------------");
 		System.out.println("Enter a product name from the following:");

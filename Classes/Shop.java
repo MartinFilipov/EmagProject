@@ -14,8 +14,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Shop {
+	private static Shop instance;
+	
 	private static final int MIN_DISCOUNT_IN_PERCENTAGE = 10;
 	private static final int DIFFERENCE_BETWEEN_MAX_AND_MIN_DISCOUNT = 11;
 	private static final int NUMBER_OF_VOUCHERS = 100;
@@ -32,16 +36,17 @@ public class Shop {
 	private Map<Integer, ShopSupplier> suppliers;
 	private List<Product> soldProducts;
 
-	public Shop() {
-		new Thread(new Logger(this)).start();
+	private Shop() {
+		new Thread(new DiscountGiver(this)).start();
 		this.discountedProducts = new ArrayList<>();
-		this.users = new HashMap<>();
-		this.products = new HashMap<>();
-		this.suppliers = new HashMap<>();
+		this.users = new ConcurrentHashMap<>();
+		this.products = new ConcurrentHashMap<>();
+		this.suppliers = new ConcurrentHashMap<>();
 		this.voucherCodes=new HashMap<>();
 		this.soldProducts=new ArrayList<>();
 		generateVouchers();
 		loadUsers();
+		new Thread(new Logger(this)).start();
 	}
 
 	// ----------------------------------------METHODS----------------------------------------
@@ -445,7 +450,10 @@ public class Shop {
 	}
 	
 	List<Product> getSoldProducts(){
-		return Collections.unmodifiableList(soldProducts);
+			return Collections.unmodifiableList(soldProducts);
+	}
+	int getSoldProductsSize() {
+		return soldProducts.size();
 	}
 // Here for testing purposes
 //	public void printVoucherCodes(){
@@ -461,5 +469,54 @@ public class Shop {
 		} catch (InterruptedException e) {
 		}
 		
+	}
+	
+	public static Shop getInstance() {
+		if (Shop.instance == null) {
+			instance = new Shop();
+		}
+		return instance;			
+	}
+	
+	public void showProductsByCategory(String name) {
+		if (name != null) {
+			Map<Class, List<Product>> productsByCategory = new HashMap<>();
+			for (Entry<String, Map<Integer, Product>> entry : this.products.entrySet()) {
+				Map<Integer, Product> suppliers = entry.getValue();
+				Product p = suppliers.values().iterator().next();
+				
+				if (p != null) {
+					if (!productsByCategory.containsKey(p.getClass())) {
+						productsByCategory.put(p.getClass(), new ArrayList<>());
+					}
+					productsByCategory.get(p.getClass()).add(p);
+				}
+
+			}
+			List<Product> list = null;
+			switch (name.toLowerCase()) {
+			case "phone":
+				 list = productsByCategory.get(Phone.class);
+				break;
+			case "laptop":
+				list = productsByCategory.get(Laptop.class);
+				break;
+			case "armor":
+				list = productsByCategory.get(Armor.class);
+				break;
+			case "weapon":
+				list = productsByCategory.get(Weapon.class);
+				break;
+			default:
+				list = productsByCategory.get(Weapon.class);
+				break;
+			}
+			
+			if (list != null) {
+				for (Product p : list) {
+					System.out.println(p);
+				}	
+			}
+		}
 	}
 }
