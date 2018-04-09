@@ -88,7 +88,8 @@ public class User {
 	}
 
 	public void chooseAProductToAddToCart() {
-		System.out.println("Enter a product name form the following");
+		System.out.println("--------------------------");
+		System.out.println("Enter a product name from the following:");
 		this.shop.showProducts();
 
 		String name = new Scanner(System.in).nextLine();
@@ -193,6 +194,15 @@ public class User {
 				p.printWarranty();
 			}else{
 				System.out.println("\tDoesn't have a valid warranty.");
+			}
+		}
+	}
+	
+	public void checkProductsForDefects(String name){
+		for(Product p:purchases){
+			if(!p.test()){
+				System.out.println(p+" has a defect, sending it back to the store for repairs.");
+				shop.repairProduct(p);
 			}
 		}
 	}

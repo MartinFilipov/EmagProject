@@ -1,7 +1,7 @@
 package Classes;
 
 
-public class Weapon extends Medieval implements Testable, IWeapon{
+public class Weapon extends Medieval implements IWeapon{
 	private static final double CHANCE_OF_BREAKING_WHEN_HIT_IN_THE_GROUND= 0.1;
 	private static final double CHANCE_OF_BREAKING_WHILE_SWINGING = 0.08;
 
@@ -62,7 +62,7 @@ public class Weapon extends Medieval implements Testable, IWeapon{
 
 	@Override
 	public String toString() {
-		return "Weapon name: "+this.getName()+", weapon type: " + weaponType +" quantity: "+this.getQuantity();
+		return "Weapon name: "+this.getName()+", weapon type: " + weaponType +", quantity: "+this.getQuantity();
 	}
 	
 }

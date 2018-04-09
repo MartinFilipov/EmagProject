@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +30,16 @@ public class Shop {
 	private Map<String, Map<Integer, Product>> products;
 	private List<Product> discountedProducts;
 	private Map<Integer, ShopSupplier> suppliers;
+	private List<Product> soldProducts;
 
 	public Shop() {
+		new Thread(new Logger(this)).start();
 		this.discountedProducts = new ArrayList<>();
 		this.users = new HashMap<>();
 		this.products = new HashMap<>();
-		this.money = 1_000;
 		this.suppliers = new HashMap<>();
 		this.voucherCodes=new HashMap<>();
+		this.soldProducts=new ArrayList<>();
 		generateVouchers();
 		loadUsers();
 	}
@@ -74,6 +77,7 @@ public class Shop {
 			double price=this.products.get(name).values().iterator().next().getPrice();
 			System.out.println(name+", price: "+price);
 		}
+		System.out.println("--------------------------");
 	}
 
 	// receive products from supplier
@@ -176,9 +180,10 @@ public class Shop {
 		for (Product p : products.get(productName).values()) {
 			System.out.println("Index: " + (index++) + " " + p +", price: "+p.getPrice());
 		}
+		System.out.println("--------------------------");
 		int insertIndex = 0;
 		do {
-			System.out.print("Pick a product index: ");
+			System.out.print("Pick a supplier by index: ");
 			insertIndex = in.nextInt();
 		} while (insertIndex < 1 || insertIndex > products.get(productName).values().size());
 		index = 1;
@@ -223,7 +228,8 @@ public class Shop {
 			}
 			
 			user.removeMoneyForProduct(retailPrice);
-			Product userProduct=product.clone(quantity);
+			Product userProduct=product.clone(quantity);	
+			this.soldProducts.add(userProduct);
 			Warranty userProductWarranty=new Warranty(userProduct);
 			userProduct.setWarranty(userProductWarranty);
 			user.addWarranty(userProductWarranty);
@@ -263,6 +269,7 @@ public class Shop {
 			}
 			user.removeMoneyForProduct(retailPriceWithDiscount);
 			Product userProduct=product.clone(quantity);
+			this.soldProducts.add(userProduct);
 			Warranty userProductWarranty=new Warranty(userProduct);
 			userProduct.setWarranty(userProductWarranty);
 			user.addWarranty(userProductWarranty);
@@ -437,10 +444,22 @@ public class Shop {
 		}
 	}
 	
+	List<Product> getSoldProducts(){
+		return Collections.unmodifiableList(soldProducts);
+	}
 // Here for testing purposes
 //	public void printVoucherCodes(){
 //		for(String s: voucherCodes.keySet()){
 //			System.out.println(s);
 //		}
 //	}
+
+	void repairProduct(Product p) {
+		try {
+			Thread.sleep(2000);
+			System.out.println("The problem with "+p.getName()+" has been solved. Please excuse us for the inconvenience.");
+		} catch (InterruptedException e) {
+		}
+		
+	}
 }

@@ -1,7 +1,7 @@
 package Classes;
 
 
-public class Armor extends Medieval implements Testable, IArmor{
+public class Armor extends Medieval implements IArmor{
 
 	private static final double CHANCE_OF_FORMING_RUST=0.05;
 	private static final double CHANCE_OF_NOT_FITTING=0.10;
@@ -75,7 +75,7 @@ public class Armor extends Medieval implements Testable, IArmor{
 
 	@Override
 	public String toString() {
-		return "Armor name: " + this.getName() + ", armor type: "+armorType+", origin: " + origin;
+		return "Armor name: " + this.getName() + ", armor type: "+armorType+", origin: " + origin+", quantity: "+this.getQuantity();
 	}
 
 

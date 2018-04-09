@@ -1,7 +1,7 @@
 
 package Classes;
 
-public abstract class Product {
+public abstract class Product implements Testable{
 	private static int id = 0;
 	private int productId;
 	private String name;

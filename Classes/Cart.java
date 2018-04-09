@@ -31,7 +31,7 @@ public class Cart {
 		Scanner in=new Scanner(System.in);
 		int index=0;
 		for(Product p:products){
-			System.out.println(p);
+			System.out.println(p+", price: "+p.getPrice());
 			int quantity=0;
 			do{
 				System.out.print("Insert quantity between 1 and "+p.getQuantity()+": ");

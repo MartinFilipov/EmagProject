@@ -1,3 +1,5 @@
+package Classes;
+
 
 public class Phone extends DeviceWithOperatingSystem implements IPhone, Testable, IElectronics {
 	
