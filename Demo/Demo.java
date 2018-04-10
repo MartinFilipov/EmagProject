@@ -42,8 +42,8 @@ public class Demo {
 		shopSupplier2.giveProductsToShop();
 		User user =new User(shop, new BankAccount("123843F", 10000),"New York","TestUser");
 		user.chooseAProductToAddToCart();
-		user.chooseAProductToAddToCart();
-		user.chooseAProductToAddToCart();
+//		user.chooseAProductToAddToCart();
+//		user.chooseAProductToAddToCart();
 
 		user.cashOut();
 		System.out.println("User money: "+user.checkBalance());
@@ -51,6 +51,7 @@ public class Demo {
 		System.out.println("Shop profit: "+shop.getMoney());
 		System.out.println("Supplier 1 money: "+shopSupplier1.getMoney());
 		System.out.println("Supplier 2 money: "+shopSupplier2.getMoney());
+		user.checkProductsForDefects();
 		
 	}
 }

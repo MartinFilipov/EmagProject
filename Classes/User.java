@@ -198,7 +198,7 @@ public class User {
 		}
 	}
 	
-	public void checkProductsForDefects(String name){
+	public void checkProductsForDefects(){
 		for(Product p:purchases){
 			if(!p.test()){
 				System.out.println(p+" has a defect, sending it back to the store for repairs.");
